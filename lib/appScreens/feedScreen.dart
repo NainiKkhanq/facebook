@@ -11,7 +11,7 @@ class FeedScreen extends StatefulWidget {
 class _FeedScreenState extends State<FeedScreen> {
   @override
   Widget build(BuildContext context) {
-    return  const SafeArea(
+    return   SafeArea(
         child: Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -21,14 +21,14 @@ class _FeedScreenState extends State<FeedScreen> {
               padding:  EdgeInsets.all(20.0),
               child: Column(
                 children: [
+                  Image.network("https://res.cloudinary.com/datit6fwc/image/upload/v1720206749/1688663318threads-logo-white_vfrn53.png",width: 50,),
+                  const ThreadMessage(),
+                  const ThreadMessage(),
+                  const ThreadMessage(),
+                  const ThreadMessage(),
+                  const ThreadMessage(),
+                  const ThreadMessage(),
 
-                  ThreadMessage(),
-                  ThreadMessage(),
-                  ThreadMessage(),
-                  ThreadMessage(),
-                  ThreadMessage(),
-                  ThreadMessage(),
-                  
                 ],
               )
             ),
