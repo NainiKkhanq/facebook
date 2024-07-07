@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:thread/appScreens/Home.dart';
 import 'package:thread/authPages/signup.dart';
 import 'package:thread/widgets/login_text_forms.dart';
 
@@ -51,7 +53,9 @@ class _HomeState extends State<Login> {
                 height: 42,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    login(emailController.text.toString().trim(), passwordController.text.toString().trim());
+                  },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: Colors.black,),
                   child: const Text("Login",
@@ -70,5 +74,20 @@ class _HomeState extends State<Login> {
         ),
       )),
     );
+  }
+  Future <void> login(String email, String password)async{
+
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Home(),));
+      },);
+    } catch (e) {
+
+      print(e);
+      return;
+    }
+
+
+
   }
 }

@@ -1,0 +1,22 @@
+Step1: Design Login/Signup
+Step2: Design the Home Screen (Bottom Navigation Bar) 
+And also we show exact Classes when some one click on Buttons Create seprate classes
+Step3: Perform Authentication (Auth and Save data in Firestore)
+Step4: We Design the View of our Thread App Post like Profile pic,Message,time, Comment
+Step 5: We create a Model Class Which is a Blue Print for Sending And Receiving data
+
+(MessageModel Class contains the information about the post UserName, Profile Pic, etc
+So we create string, or int varaible for this information Then we create the constructors of these information (We use dart data class generator extension) to create
+Json Serialization (its auto generateable with this extension) In factory ThreadMessageModel.fromMap we set the created Variable like ID: for ID Map and UserName for userName map.)
+Step 6: For testing we create an demo list which type will be same as <ModelClass> *In Brackets assign the Model Class name* Inside List [we call that model class and assign values to them so inside one list we used the same model class template to create data] 
+
+Step 7: Now then we go to Feed Screen where we can show this List Data in Post. So In the widget of Post we create an instance of ThreadModelClass and set it as required so on  Feed Screen now we need to add more things.
+Step No 8: So On Feed Class where we are calling this thread message widgets class we will use the list View builder and in return we can assign the List of data that we created in Step Step 6(Model Class for Demo) and then we also pass the index in list so it will take the data from List index wise and it will map it automatically because we are assigning this list to the Model Class (message:). So it will take the data and map it.
+Step No 9: Inside Widget Class We will use the instance of model class and set the values as per our need. For example i need to assign username so i will use the instance of model class and assign the name.
+
+Step No 10: Now *Time difference* Mostly we see this on Fb posts it shows this man post this video one minute ago like this to create this we will use the Time Difference Logic. To setup the time Difference 1: First we will create the method wiht custom name and take arguements of DateTime *String _getDifference(DateTime timeStamp){}* Now inside this method create a final variable with Now name and get the Current Time so we will use *final Now = DateTime.now()*Create another final variable with difference name and get the time difference from the current time. Actually timedifference function will take the current time and timestamp of post and calculate that long user post this post.
+After calculating the differene it will save the difference value in difference variable. 
+Now we will use conditional statments like if(difference.inMinutes <1) it means if the calculated difference is less than 1 then show this post was posted some seconds ago like this.
+
+Step 11: Assign this function to the text where you will show the difference time and pass the timestamp that you get from model class instance. IN model Class use this logic to get Time Stamp *DateTime.now().subtract(Duration(minutes: 60)),* We want to know that how much time before user post the thread so in that case to get the exact time we will subtract the posted time from the Current time to get the correct Timestamp.
+

@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:thread/appScreens/Home.dart';
+import 'package:thread/authPages/Login.dart';
 import 'package:thread/widgets/login_text_forms.dart';
 
 class signUp extends StatefulWidget {
@@ -60,22 +64,76 @@ class _signUpState extends State<signUp> {
                 height: 42,
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () {},
-                  style:
-                      ElevatedButton.styleFrom(backgroundColor: Colors.black,),
+                  onPressed: () {
+                    registeration(
+                        emailController.text.toString().trim(),
+                        passwordController.text.toString().trim(),
+                        userNameController.text.toString().trim(),
+                        fullNameController.text.toString().trim());
+                        
+                        emailController.clear();
+                        passwordController.clear();
+                        userNameController.clear();
+                        fullNameController.clear();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                  ),
                   child: const Text("Sign Up",
                       style: TextStyle(color: Colors.white)),
                 )),
             const Spacer(),
-                 Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                  const Text("Already have an account?"),
-                  TextButton(onPressed: (){}, child: const Text("Login",style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),))
-                ],)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Already have an account?"),
+                TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Login(),
+                          ));
+                    },
+                    child: const Text(
+                      "Login",
+                      style: TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.bold),
+                    ))
+              ],
+            )
           ],
         ),
       )),
     );
+  }
+
+  Future<void> registeration(
+      String email, String password, String userName, String FullName) async {
+    try {
+      // Creating User and saving data about that user in userCredential like UID etc.
+      UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      // Then we create a variable and save the userID there
+      String userID = userCredential.user!.uid.toString();
+      // Now saving the user data in FirebaseFirestore
+      FirebaseFirestore.instance.collection("Users").doc(userID).set({
+        'FullName': FullName,
+        'userName': userName,
+        'password': password,
+        "email": email,
+      }).whenComplete(
+        () {
+          Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const Home(),
+              ));
+        },
+      );
+    } catch (e) {
+      print(e.toString());
+      return;
+    }
   }
 }
