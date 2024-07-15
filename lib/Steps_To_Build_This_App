@@ -20,3 +20,16 @@ Now we will use conditional statments like if(difference.inMinutes <1) it means 
 
 Step 11: Assign this function to the text where you will show the difference time and pass the timestamp that you get from model class instance. IN model Class use this logic to get Time Stamp *DateTime.now().subtract(Duration(minutes: 60)),* We want to know that how much time before user post the thread so in that case to get the exact time we will subtract the posted time from the Current time to get the correct Timestamp.
 
+Step 12: Designing the Search Screen we add search bar at the top. and the column which we used on search will must be wrap under Single Child Scroll View.     
+
+Step 13: Now we will setup the Search Function. To do this we create another widget class with SuggestedFollowersWidget and assign it in Search Class after search bar. And inside the class we will call the ListTile() because we will show image, and the name of user so to do this ListTile is the best option. So we set Up the List Tile with demo name like Profile Pic, Name, And In trailing we use the container and style it to made a follow button.
+
+Step 14: Now to setup the Search Section we are going to create a model. So In that app we create a model with a name suggested_followersModel.dart. Inside this we will setup the Blueprint for the Search Widget
+
+Step 15: Now create a List in the Suggested_followersModel class which type will be like model class and inside this list call that model class and assign values
+
+Step 16: Add Dependency of pub  SlidingUpPanel and now we will create Post Screen
+
+Step 17:  SlidingUpPanel will take body so inside that body we will pass the list of pages with index
+
+Step 18: SetUp Post Screen

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:thread/appScreens/favoriteScreen.dart';
 import 'package:thread/appScreens/feedScreen.dart';
 import 'package:thread/appScreens/postScreen.dart';
@@ -22,6 +23,7 @@ class _HomeState extends State<Home> {
     class for Feed, Post, Favorite so these widget class will be saved in this list and on click of bottom
     navigation bar we will call these classes
      */
+    PanelController panelController = PanelController();
     final List<Widget>  pages = [
         
         const FeedScreen(),
@@ -38,7 +40,20 @@ class _HomeState extends State<Home> {
       // And show us the specific widget from the index (Index is saved in Selected index as per bottom navigation bar)
       // so when the index is 3 it shows Post 
       
-      body: pages[selectedIndex],
+      body: SlidingUpPanel(
+        controller: panelController,
+        minHeight: 0,
+        maxHeight: MediaQuery.of(context).size.height *0.8,
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(25),
+          topRight: Radius.circular(25)
+        ),
+        panelBuilder: (sc) {
+          // Here we return our Post Screen which will be show inside Sliders
+          return const PostScreen();
+        },
+        body: pages[selectedIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         // Selected Index Mean which _list view we are showing or which Icon is selected by user
         // BY default we set it to Home but when user will select search, messages icons from bottom navigation
@@ -53,9 +68,14 @@ class _HomeState extends State<Home> {
           // By Default Bottom Navigation bar has index according to the Items that we created so in this case
           // we created 5 items so index will 5 so we save the  bottom navigation index to selected
           // So once user will click on 5th index profile selected index value will be change to 5
-          setState(() {
+         if(index ==2){
+          panelController.isPanelOpen
+          ? panelController.close():panelController.open();
+         }else{
+           setState(() {
             selectedIndex = index;
           });
+         }
         },
         // Type is fixed it means that when we will scroll in list so it will always remain fixed like thread, Insta
 
