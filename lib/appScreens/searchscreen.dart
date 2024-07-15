@@ -41,7 +41,6 @@ class _SearchScreenState extends State<SearchScreen> {
                   border: InputBorder.none,
                   hintText: 'Search',
                   prefixIcon: Icon(Icons.search),
-                  contentPadding: EdgeInsets.only(bottom: 5,left: 4,top: 5)
               ),
             ),
           ),

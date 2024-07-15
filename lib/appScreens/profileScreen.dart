@@ -84,9 +84,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ]),
 
               const Expanded(child: TabBarView(children: [
-                Center(child: Text("Your Threads")),
-                Center(child: Text("Your Replies")),
-                Center(child: Text("Your Reposts")),
+                Center(child: Text("Your Threads here")),
+                Center(child: Text("Your Replies here")),
+                Center(child: Text("Your Reposts here")),
 
               ]))
 
