@@ -24,18 +24,28 @@ class _HomeState extends State<Home> {
     navigation bar we will call these classes
      */
     PanelController panelController = PanelController();
-    final List<Widget>  pages = [
-        
+     List<Widget>  pages = [];
+  @override
+  void initState() {
+    // We assign classes to list there because  on postScreen we are passing panelController
+    // because on close button we will close the slider
+    pages = [
+         
         const FeedScreen(),
         const SearchScreen(),
-        const PostScreen(),
+        PostScreen(panelController: panelController,),
         const FavoriteScreen(),
         const ProfileScreen(),
+       
     ];
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-
+    
+    
     return Scaffold(
+
       // Now in body we are telling to scaffold that show the Widgets from pages List
       // And show us the specific widget from the index (Index is saved in Selected index as per bottom navigation bar)
       // so when the index is 3 it shows Post 
@@ -50,7 +60,7 @@ class _HomeState extends State<Home> {
         ),
         panelBuilder: (sc) {
           // Here we return our Post Screen which will be show inside Sliders
-          return const PostScreen();
+          return  PostScreen(panelController: panelController,);
         },
         body: pages[selectedIndex],
       ),
