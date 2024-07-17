@@ -122,6 +122,7 @@ class _signUpState extends State<signUp> {
         'userName': userName,
         'password': password,
         "email": email,
+        "bio":"Write Bio"
       }).whenComplete(
         () {
           Navigator.pushReplacement(

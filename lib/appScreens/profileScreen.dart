@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:thread/models/thread_messages_model.dart';
 import 'package:thread/widgets/thread_message_widget.dart';
 
@@ -61,16 +60,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .snapshots()
         // and Converting that Snapshots to .map((snapshot){})
         .map((snapshot) {
-          // Inside Map we return the snapshot.docs.map((doc){})
-          
+      // Inside Map we return the snapshot.docs.map((doc){})
+
       return snapshot.docs.map((doc) {
-        // Now Data from snapshot is in the doc variable 
+        // Now Data from snapshot is in the doc variable
         // We create a seprate variable called messageData which will fetch and save all doc.data in messageData
 
-        final messageData = doc.data(); // messageData type will auto change to map
+        final messageData =
+            doc.data(); // messageData type will auto change to map
         /* Now we will also show the Time of thread posting so that's why we will call and convert timestamp to data
         which will give us the exact time of posting
-        */ 
+        */
         final timestamp = (messageData['time'] as Timestamp).toDate();
         /* No when we get all data so we are returning the ThreadMessageModel 
         and inside this Model we will pass the complete Data which is required by this model from messageData
@@ -82,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             senderProfileImageUrl: "",
             message: messageData['thread'],
             timeStamp: timestamp);
-      // Then we convert streams data to List 
+        // Then we convert streams data to List
       }).toList();
     });
   }
@@ -169,22 +169,44 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ]),
                   Expanded(
                       child: TabBarView(children: [
-                    // Showing User Own Threads which were posted by them Using Stream Builder                       
+                    // Showing User Own Threads which were posted by them Using Stream Builder
                     StreamBuilder(
+                        // Set the fetchuserThreads (Stream method) as a stream
                         stream: fetchUserThreads(),
                         builder: (context, snapshot) {
+                          // If Snapshot contains any data
                           if (snapshot.hasData) {
+                            // Then we create a userThread Variable and it save the snapshot.data in it
+                            // So userTHread will automatically change its DataType as per Data
+                            // In this case userThread will be a List
                             final userThread = snapshot.data;
+                            // Now after getting data we will return the ListView.builder
                             return ListView.builder(
+                              //setting the itemCount using the userThread because its a list and it contain all data from stream method
+
                               itemCount: userThread!.length,
                               itemBuilder: (context, index) {
+                                /* create another messageData variable and in this variable we will pass the userThread List and 
+                                        pass the listview builder index in it 
+                                        */
                                 final messageData = userThread[index];
+                                /* Now we as we know ThreadMessageWidget is getting data from ThreadMessagModel so that''s
+                                why we will pass the data from Stream into ThreadMessageModel and ThreadmessageWidget will
+                                get the data from Model. So model will get the new data whenever we will call it or assign new values
+                                 
+                                 */
                                 final messageModel = ThreadMessageModel(
                                     id: messageData.id,
                                     senderName: messageData.senderName,
                                     senderProfileImageUrl: "",
                                     message: messageData.message,
                                     timeStamp: messageData.timeStamp);
+                                    /* In last we are returning the Widget which is ThreadMessageWidget and all data like profile image
+                                   message, posting data as designed in this Widget class
+                                   But this Threadmessagewidget also need the variable of ThreadMessageModel
+                                   so message Model is the ThreadMessageModel instance so we will pass it to
+                                   ThreadMessaegWidget....
+                                        */
                                 return ThreadMessageWidget(
                                     messageModel: messageModel);
                               },
