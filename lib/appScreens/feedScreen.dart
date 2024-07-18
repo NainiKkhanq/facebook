@@ -91,7 +91,7 @@ class _FeedScreenState extends State<FeedScreen> {
                                         id: messageData['id'],
                                         senderName: messageData['sender'],
                                         senderProfileImageUrl:
-                                            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfu_FJRE1WJWfk1jTiEYgUdRxGYwSnD7NB-g&s',
+                                            'https://assets.about.me/background/users/n/k/t/nktechtube_1658465013_975.jpg',
                                         message: messageData['thread'],
                                         timeStamp: timeStamps);
                                     return ThreadMessageWidget(

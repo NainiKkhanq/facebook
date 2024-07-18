@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class EditProfile extends StatefulWidget {
   PanelController panelController = PanelController();
+ 
    EditProfile({super.key,required this.panelController});
 
   @override
@@ -10,8 +13,13 @@ class EditProfile extends StatefulWidget {
 }
 
 class _EditProfileState extends State<EditProfile> {
+   
   @override
   Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance;
+  final userData = FirebaseFirestore.instance.collection("Users").doc(currentUser.currentUser!.uid);
+     final bioController = TextEditingController();
+
     bool isChecked = false;
     return Scaffold(
         body: Padding(
@@ -32,7 +40,16 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   TextButton(
                       // Called the Thread Posting Message this will send the Thread to the Firestore
-                      onPressed: () {},
+                      onPressed: () {
+                        userData.update({
+                          'bio':bioController.text.toString(),
+                          
+                        });
+                        setState(() {
+                          widget.panelController.close();
+                          
+                        });
+                      },
                       child: const Text(
                         "Save",
                         style: TextStyle(
@@ -87,6 +104,7 @@ class _EditProfileState extends State<EditProfile> {
                       ListTile(
                           title: const Text("Bio"),
                           subtitle: TextFormField(
+                            controller: bioController,
                             autocorrect: true,
                             decoration: const InputDecoration(
                                 border: InputBorder.none,

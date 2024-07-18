@@ -13,6 +13,8 @@ class signUp extends StatefulWidget {
 }
 
 class _signUpState extends State<signUp> {
+  bool  isLoading = false;
+
   @override
   Widget build(BuildContext context) {
     final emailController = TextEditingController();
@@ -60,28 +62,30 @@ class _signUpState extends State<signUp> {
             ),
 
             // To Give perfect sizing to widgets use Sizedbox
-            SizedBox(
-                height: 42,
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: () {
-                    registeration(
-                        emailController.text.toString().trim(),
-                        passwordController.text.toString().trim(),
-                        userNameController.text.toString().trim(),
-                        fullNameController.text.toString().trim());
-                        
-                        emailController.clear();
-                        passwordController.clear();
-                        userNameController.clear();
-                        fullNameController.clear();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.black,
-                  ),
-                  child: const Text("Sign Up",
-                      style: TextStyle(color: Colors.white)),
-                )),
+           isLoading? SizedBox(
+               height: 42,
+               width: double.infinity,
+               child: ElevatedButton(
+                 onPressed: () {
+
+                   registeration(
+                       emailController.text.toString().trim(),
+                       passwordController.text.toString().trim(),
+                       userNameController.text.toString().trim(),
+                       fullNameController.text.toString().trim()
+                   );
+
+                   emailController.clear();
+                   passwordController.clear();
+                   userNameController.clear();
+                   fullNameController.clear();
+                 },
+                 style: ElevatedButton.styleFrom(
+                   backgroundColor: Colors.black,
+                 ),
+                 child: const Text("Sign Up",
+                     style: TextStyle(color: Colors.white)),
+               )):const CircularProgressIndicator(),
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -125,6 +129,9 @@ class _signUpState extends State<signUp> {
         "bio":"Write Bio"
       }).whenComplete(
         () {
+          setState(() {
+            isLoading = true;
+          });
           Navigator.pushReplacement(
               context,
               MaterialPageRoute(

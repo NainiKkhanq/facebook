@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:thread/appScreens/editProfileScreen.dart';
+import 'package:thread/authPages/Login.dart';
 import 'package:thread/models/thread_messages_model.dart';
 import 'package:thread/widgets/thread_message_widget.dart';
 
@@ -136,7 +137,7 @@ PanelController panelController = PanelController();
                       trailing: const CircleAvatar(
                         radius: 25,
                         backgroundImage: NetworkImage(
-                            "https://media.istockphoto.com/id/1476170969/photo/portrait-of-young-man-ready-for-job-business-concept.webp?b=1&s=170667a&w=0&k=20&c=FycdXoKn5StpYCKJ7PdkyJo9G5wfNgmSLBWk3dI35Zw="),
+                            "https://assets.about.me/background/users/n/k/t/nktechtube_1658465013_975.jpg"),
                       ),
                     ),
                     Text(userBio),
@@ -175,7 +176,10 @@ PanelController panelController = PanelController();
                             ),
                           ),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              FirebaseAuth.instance.signOut();
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const Login(),));
+                            },
                             child: Container(
                               height: 30,
                               width: 120,
@@ -184,7 +188,7 @@ PanelController panelController = PanelController();
                                 border: Border.all(color: Colors.grey),
                                 borderRadius: BorderRadius.circular(8),
                               ),
-                              child: const Text("Share Profile"),
+                              child: const Text("Logout"),
                             ),
                           )
                         ],
@@ -201,6 +205,7 @@ PanelController panelController = PanelController();
                           Tab(text: "Replies"),
                           Tab(text: "Reposts"),
                         ]),
+                    SizedBox(height: 20,),
                     Expanded(
                         child: TabBarView(children: [
                       // Showing User Own Threads which were posted by them Using Stream Builder
@@ -232,7 +237,7 @@ PanelController panelController = PanelController();
                                   final messageModel = ThreadMessageModel(
                                       id: messageData.id,
                                       senderName: messageData.senderName,
-                                      senderProfileImageUrl: "",
+                                      senderProfileImageUrl: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS28hpNCB0d4qFEvL4SVbsAGzRmYUg9KOO4PA&s",
                                       message: messageData.message,
                                       timeStamp: messageData.timeStamp);
                                       /* In last we are returning the Widget which is ThreadMessageWidget and all data like profile image

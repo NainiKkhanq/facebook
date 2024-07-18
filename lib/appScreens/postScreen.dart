@@ -92,7 +92,7 @@ class _PostScreenState extends State<PostScreen> {
               child: Row(
                 children: [
                    const CircleAvatar(
-                    foregroundImage: NetworkImage("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfu_FJRE1WJWfk1jTiEYgUdRxGYwSnD7NB-g&s"),
+                    foregroundImage: NetworkImage("https://assets.about.me/background/users/n/k/t/nktechtube_1658465013_975.jpg"),
                     radius:   25,
                   ),
                  const SizedBox(width: 20,),
